@@ -18,8 +18,8 @@
   
   <entry>
     <title>page</title>
-    <link href="https://wang-qing-yang.github.io/2023/04/09/page/"/>
-    <id>https://wang-qing-yang.github.io/2023/04/09/page/</id>
+    <link href="https://wang-qing-yang.github.io/2023/04/09/Spring6-day1/"/>
+    <id>https://wang-qing-yang.github.io/2023/04/09/Spring6-day1/</id>
     <published>2023-04-09T15:49:05.000Z</published>
     <updated>2023-04-09T15:52:18.731Z</updated>
     
@@ -45,26 +45,6 @@
     <category term="DI" scheme="https://wang-qing-yang.github.io/tags/DI/"/>
     
     <category term="AOP" scheme="https://wang-qing-yang.github.io/tags/AOP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://wang-qing-yang.github.io/2023/04/09/Spring6-day1/"/>
-    <id>https://wang-qing-yang.github.io/2023/04/09/Spring6-day1/</id>
-    <published>2023-04-09T15:48:16.027Z</published>
-    <updated>2023-04-09T15:48:16.102Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Spring6"><a href="#Spring6" class="headerlink" title="Spring6"></a>Spring6</h2><h3 id="问题与解决方法"><a href="#问题与解决方法" class="headerlink" title="问题与解决方法"></a>问题与解决方法</h3><h4 id="MVC架构"><a href="#MVC架构" class="headerlink" title="MVC架构"></a>MVC架构</h4><p>web层（表示层），service层（业务层），dao（持久层）</p><img src="C:\Users\wang\AppData\Roaming\Typora\typora-user-images\image-20230409222335855.png" alt="image-20230409222335855" style="zoom:50%;" /><h4 id="简单依赖关系"><a href="#简单依赖关系" class="headerlink" title="简单依赖关系"></a>简单依赖关系</h4><p>在service层，web层的实例中，先创建dao层的实例，再在方法中调用实例方法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="comment">//用于调用DAO层，即持久层进行具体操作</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">UserDao</span> <span class="variable">userDao</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserDaoImplForMySQL</span>();</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteUser</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//删除用户信息的逻辑</span></span><br><span class="line">        <span class="comment">//调用持久层</span></span><br><span class="line">        userDao.deleteById();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>则当持久层的实现类进行变换，需要在业务层修改代码</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于调用DAO层，即持久层进行具体操作</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">UserDao</span> <span class="variable">userDao</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserDaoImplForOracle</span>();</span><br></pre></td></tr></table></figure><p>同样当业务层的实现类进行变换，需要在表现层修改相应的创建实例的代码</p><p>导致<strong>程序耦合高</strong>，因为在层中创建下层的实例，导致上层依赖下层。</p><h5 id="OCP开闭原则"><a href="#OCP开闭原则" class="headerlink" title="OCP开闭原则"></a>OCP开闭原则</h5><p>不符合<strong>OCP开闭原则</strong>：软件开发中应当<strong>对扩展开放，对修改关闭</strong>。因为修改之前正常的程序，则需要对<strong>各个修改的部分进行重新测试上线</strong>，成本高，复杂度高。</p><p>（软件七大开发原则，其他六原则为OCP服务）</p><h5 id="依赖倒置原则（DIP原则）"><a href="#依赖倒置原则（DIP原则）" class="headerlink" title="依赖倒置原则（DIP原则）"></a>依赖倒置原则（DIP原则）</h5><p>Dependence Inversion principle，<strong>面向抽象编程，面向接口编程，上层不依赖下层</strong></p><h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="comment">//依赖倒置</span></span><br><span class="line">    <span class="keyword">private</span> UserDao userDao；</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteUser</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//不再是具体的实现类</span></span><br><span class="line">        userDao.deleteById();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如何创建对象？如何将对象赋值到UserDao</span></span><br></pre></td></tr></table></figure><h5 id="控制反转"><a href="#控制反转" class="headerlink" title="控制反转"></a>控制反转</h5><p>Spring框架，帮助创建对象，维护对象之间关系（即怎样选择实例），并对象赋到属性中。将创建对象，new对象，即实例化的工作交给spring做，称为<strong>控制反转（Inversion of Control）</strong>。</p><p><strong>IoC：面向对象编程的一种设计思想，将对象的创建权交出去，将对象与对象之间关系的管理权交出去，由第三方容器负责创建与维护。</strong></p><p>实现方式：<strong>依赖注入（Dependency Injection, DI）</strong></p><p>DI实现方式：set方法注入&#x2F;构造方法注入—–方法中给属性赋值</p><p><strong>Spring框架：一个实现了IoC思想的框架</strong></p><h3 id="Spring概要"><a href="#Spring概要" class="headerlink" title="Spring概要"></a>Spring概要</h3><p>Spring是一个轻量级的<strong>控制反转(IoC)<strong>和</strong>面向切面(AOP)<strong>的</strong>容器框架</strong>。</p><p><img src="https://cdn.nlark.com/yuque/0/2022/png/21376908/1663726169861-b5acb757-17e0-4d3d-a811-400eb7edd1b3.png?x-oss-process=image/watermark,type_d3F5LW1pY3JvaGVp,size_29,text_5Yqo5Yqb6IqC54K5,color_FFFFFF,shadow_50,t_80,g_se,x_10,y_10" alt="image.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;Spring6&quot;&gt;&lt;a href=&quot;#Spring6&quot; class=&quot;headerlink&quot; title=&quot;Spring6&quot;&gt;&lt;/a&gt;Spring6&lt;/h2&gt;&lt;h3 id=&quot;问题与解决方法&quot;&gt;&lt;a href=&quot;#问题与解决方法&quot; class=&quot;headerlink</summary>
-      
-    
-    
-    
     
   </entry>
   
