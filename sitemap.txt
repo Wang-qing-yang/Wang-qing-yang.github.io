@@ -1,3 +1,5 @@
+https://wang-qing-yang.github.io/2023/04/09/page/
+https://wang-qing-yang.github.io/2023/04/09/Spring6-day1/
 https://wang-qing-yang.github.io/2023/04/08/resemu/
 https://wang-qing-yang.github.io/2023/04/08/%E4%BA%8C%E5%8F%89%E6%A0%91-1/
 https://wang-qing-yang.github.io/tags/index.html
@@ -6,7 +8,13 @@ https://wang-qing-yang.github.io/categories/index.html
 https://wang-qing-yang.github.io/about/index.html
 https://wang-qing-yang.github.io/404.html
 https://wang-qing-yang.github.io/
+https://wang-qing-yang.github.io/tags/OCP/
+https://wang-qing-yang.github.io/tags/DIP/
+https://wang-qing-yang.github.io/tags/IoC/
+https://wang-qing-yang.github.io/tags/DI/
+https://wang-qing-yang.github.io/tags/AOP/
 https://wang-qing-yang.github.io/tags/%E7%AE%80%E5%8E%86/
 https://wang-qing-yang.github.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/
+https://wang-qing-yang.github.io/categories/Spring6/
 https://wang-qing-yang.github.io/categories/%E4%B8%AA%E4%BA%BA/
 https://wang-qing-yang.github.io/categories/Leetcode/
