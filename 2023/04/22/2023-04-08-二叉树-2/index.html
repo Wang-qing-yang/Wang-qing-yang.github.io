@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>二叉树-2 | Hexo</title>
+  <meta name="description" content="二叉树二叉搜索树定义 左子树的节点值均小于根节点的值 右子树的节点值均大于根节点的值 左右子树分别为二叉搜索树  重要性质中序遍历二叉搜索树得到：节点值递增的节点序列 题目530.二叉搜索树的最小绝对差最小绝对差：树中任意两不同节点的最小差值，则在搜索二叉树中为，中序遍历相邻节点的最小差值 12345678910111213141516171819202122232425&#x2F;&#x2F;递归遍历class S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树-2">
+<meta property="og:url" content="https://wang-qing-yang.github.io/2023/04/22/2023-04-08-%E4%BA%8C%E5%8F%89%E6%A0%91-2/index.html">
+<meta property="og:site_name" content="wangqingyang-blog">
+<meta property="og:description" content="二叉树二叉搜索树定义 左子树的节点值均小于根节点的值 右子树的节点值均大于根节点的值 左右子树分别为二叉搜索树  重要性质中序遍历二叉搜索树得到：节点值递增的节点序列 题目530.二叉搜索树的最小绝对差最小绝对差：树中任意两不同节点的最小差值，则在搜索二叉树中为，中序遍历相邻节点的最小差值 12345678910111213141516171819202122232425&#x2F;&#x2F;递归遍历class S">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-22T02:30:31.000Z">
+<meta property="article:modified_time" content="2023-04-24T14:40:28.335Z">
+<meta property="article:author" content="wangqingyang">
+<meta property="article:tag" content="二叉树">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://wang-qing-yang.github.io/2023/04/22/2023-04-08-%E4%BA%8C%E5%8F%89%E6%A0%91-2/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="wangqingyang-blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-blue" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Wang-qing-yang" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">王庆阳</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Nanjing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Wang-qing-yang" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>简单记录下</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Leetcode/">Leetcode</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring6/">Spring6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA/">个人</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOP/" rel="tag">AOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DI/" rel="tag">DI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIP/" rel="tag">DIP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoC/" rel="tag">IoC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCP/" rel="tag">OCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" rel="tag">每日一题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%80%E5%8E%86/" rel="tag">简历</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AOP/" style="font-size: 13px;">AOP</a> <a href="/tags/DI/" style="font-size: 13px;">DI</a> <a href="/tags/DIP/" style="font-size: 13px;">DIP</a> <a href="/tags/IoC/" style="font-size: 13px;">IoC</a> <a href="/tags/OCP/" style="font-size: 13px;">OCP</a> <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 14px;">二叉树</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 13px;">每日一题</a> <a href="/tags/%E7%AE%80%E5%8E%86/" style="font-size: 13px;">简历</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/04/30/Apache/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-04-30T02:04:48.985Z" itemprop="datePublished">2023-04-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Leetcode/">Leetcode</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/04/23/daily/" class="title">每日一题记录</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-04-23T02:30:31.000Z" itemprop="datePublished">2023-04-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Leetcode/">Leetcode</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/04/22/2023-04-08-%E4%BA%8C%E5%8F%89%E6%A0%91-2/" class="title">二叉树-2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-04-22T02:30:31.000Z" itemprop="datePublished">2023-04-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/04/10/Spring6-day2/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-04-10T01:04:20.792Z" itemprop="datePublished">2023-04-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spring6/">Spring6</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/04/09/Spring6-week1/" class="title">Spring6-week1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-04-09T15:49:05.000Z" itemprop="datePublished">2023-04-09</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2023-04-08-二叉树-2" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      二叉树-2
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/04/22/2023-04-08-%E4%BA%8C%E5%8F%89%E6%A0%91-2/" class="article-date">
+	  <time datetime="2023-04-22T02:30:31.000Z" itemprop="datePublished">2023-04-22</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Leetcode/">Leetcode</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/04/22/2023-04-08-%E4%BA%8C%E5%8F%89%E6%A0%91-2/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.6k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ol>
+<li>左子树的节点值均小于根节点的值</li>
+<li>右子树的节点值均大于根节点的值</li>
+<li>左右子树分别为二叉搜索树</li>
+</ol>
+<h4 id="重要性质"><a href="#重要性质" class="headerlink" title="重要性质"></a>重要性质</h4><p>中序遍历二叉搜索树得到：节点值递增的节点序列</p>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><h6 id="530-二叉搜索树的最小绝对差"><a href="#530-二叉搜索树的最小绝对差" class="headerlink" title="530.二叉搜索树的最小绝对差"></a>530.二叉搜索树的最小绝对差</h6><p>最小绝对差：树中任意两不同节点的最小差值，则在搜索二叉树中为，<strong>中序遍历</strong>相邻节点的最小差值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//递归遍历</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="comment">//全局变量，记录最小值、遍历的上一个节点</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">    TreeNode pre;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getMinimumDifference</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        getMin(root);</span><br><span class="line">        <span class="keyword">return</span> min;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//中遍历二叉搜索树，则为递增的节点，逐一判断差值</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getMin</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        getMin(node.left);</span><br><span class="line">        <span class="comment">//当和前一个节点差值小于最小值，则更新最小值</span></span><br><span class="line">        <span class="keyword">if</span>(pre != <span class="literal">null</span>)&#123;</span><br><span class="line">            min = Math.min(node.val - pre.val,min);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//更新节点</span></span><br><span class="line">        pre = node;</span><br><span class="line">        getMin(node.right);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间复杂度：O(N)，每个节点被访问一次</strong></p>
+<p><strong>空间复杂度：O(N)，系统栈的长度为二叉树深度，在最差情况下二叉搜索树为一个链表</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//迭代</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getMinimumDifference</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        <span class="comment">//初始化栈和最小值</span></span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">        <span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">		<span class="comment">//存放当前节点与上一个节点</span></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> root;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">while</span>(cur != <span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//入栈直到最左边节点</span></span><br><span class="line">            <span class="keyword">if</span>(cur != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(cur);</span><br><span class="line">                cur = cur.left;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;<span class="comment">//最左边节点先出栈</span></span><br><span class="line">                cur = stack.pop();</span><br><span class="line">                <span class="keyword">if</span>(pre != <span class="literal">null</span>)&#123;</span><br><span class="line">                    min = Math.min(min, cur.val - pre.val);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//更新节点</span></span><br><span class="line">                pre = cur;</span><br><span class="line">                cur = cur.right;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> min;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间复杂度：O(N)，每个节点被访问一次</strong></p>
+<p><strong>空间复杂度：O(N)，栈的空间最差情况为节点数</strong></p>
+<h6 id=""><a href="#" class="headerlink" title=""></a></h6><h6 id="501-二叉搜索树中的众数"><a href="#501-二叉搜索树中的众数" class="headerlink" title="501.二叉搜索树中的众数"></a>501.二叉搜索树中的众数</h6><p>中序遍历，比较相邻节点</p>
+<p>记录节点频率与最高频率，当相等时，加入集合，大于时更新频率，清空集合</p>
+<p>记录上一个节点，用于更新频率</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="comment">//全局变量</span></span><br><span class="line">    <span class="comment">//集合，存放结果</span></span><br><span class="line">    List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="comment">//记录频率</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//记录最高频率</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">maxCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//记录上一个节点</span></span><br><span class="line">    TreeNode pre;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] findMode(TreeNode root) &#123;</span><br><span class="line">        find(root);</span><br><span class="line">        <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[list.size()];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; res.length; i++)&#123;</span><br><span class="line">            res[i] = list.get(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">find</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="comment">//中序遍历</span></span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        find(node.left);</span><br><span class="line">        <span class="comment">//节点相同，则增加</span></span><br><span class="line">        <span class="keyword">if</span>(pre != <span class="literal">null</span> &amp;&amp; pre.val == node.val)&#123;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;<span class="comment">//不相同，则为新节点，当前节点频率为1</span></span><br><span class="line">            count = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//节点频率为最高，则加入集合</span></span><br><span class="line">        <span class="keyword">if</span>(count == maxCount)&#123;</span><br><span class="line">            list.add(node.val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//出现更高频率，则清空集合，加入当前节点，更新最高频率</span></span><br><span class="line">        <span class="keyword">if</span>(count &gt; maxCount)&#123;</span><br><span class="line">            list.clear();</span><br><span class="line">            list.add(node.val);</span><br><span class="line">            maxCount = count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//更新节点</span></span><br><span class="line">        pre = node;</span><br><span class="line">        find(node.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//迭代</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] findMode(TreeNode root) &#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> root;</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">Maxcount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(cur != <span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">if</span>(cur != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(cur);</span><br><span class="line">                cur = cur.left;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                cur = stack.pop();</span><br><span class="line">                <span class="comment">//根据相邻节点关系，更新频率</span></span><br><span class="line">                <span class="keyword">if</span>(pre != <span class="literal">null</span> &amp;&amp; cur.val == pre.val)&#123;</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    count = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//根据count，更新集合</span></span><br><span class="line">                <span class="keyword">if</span>(count == Maxcount)&#123;</span><br><span class="line">                    list.add(cur.val);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(count &gt; Maxcount)&#123;</span><br><span class="line">                    list.clear();</span><br><span class="line">                    list.add(cur.val);</span><br><span class="line">                    Maxcount = count;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//更新节点</span></span><br><span class="line">                pre = cur;</span><br><span class="line"></span><br><span class="line">                cur = cur.right;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[list.size()];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i&lt; res.length; i++)&#123;</span><br><span class="line">            res[i] = list.get(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="236-二叉树的最近公共祖先"><a href="#236-二叉树的最近公共祖先" class="headerlink" title="236.二叉树的最近公共祖先"></a>236.二叉树的最近公共祖先</h6><p>从下往上遍历二叉树，则采用后序遍历</p>
+<p>最近公共祖先则有：</p>
+<ol>
+<li>节点左右子树中，分别包含两个节点，则此根节点为最佳公共祖先</li>
+<li>节点为p，左&#x2F;右子树中含有q，则此节点为最近公共祖先</li>
+</ol>
+<p>为了传递这个祖先信息，即子树中含有p&#x2F;q节点的信息，则需要返回节点，当返回节点为null则子树没有p&#x2F;q，当非null，则为p&#x2F;q&#x2F;最近公共祖先，需要继续向上传递</p>
+<p>当左右子树的返回值都非null，则此节点为公共祖先，返回此节点</p>
+<p>当左右节点有非null，则传递这个信息，返回这个非null</p>
+<p>当都为Null，则没有找到，则返回Null</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="comment">//从下往上遍历，对每个子树返回是否找到节点</span></span><br><span class="line">    <span class="comment">//传递信息直到根节点</span></span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">lowestCommonAncestor</span><span class="params">(TreeNode root, TreeNode p, TreeNode q)</span> &#123;</span><br><span class="line">        <span class="comment">//从下往上递归遍历二叉树，即左右中</span></span><br><span class="line">        <span class="comment">//返回值为节点，当遇到p/q则返回p/q，表示找到节点，不是则返回null，表示没有找到</span></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span> || root == p || root == q)&#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//后序遍历</span></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">left</span> <span class="operator">=</span> lowestCommonAncestor(root.left,p,q);</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">right</span> <span class="operator">=</span> lowestCommonAncestor(root.right,p,q);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(left == <span class="literal">null</span> &amp;&amp; right == <span class="literal">null</span>)&#123;<span class="comment">//没有找到</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(left != <span class="literal">null</span> &amp;&amp; right != <span class="literal">null</span>)&#123;<span class="comment">//左右子树分别找到，则返回祖先</span></span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(left == <span class="literal">null</span>)&#123;<span class="comment">//左子树没有找到，则返回右子树信息</span></span><br><span class="line">            <span class="keyword">return</span> right;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> left;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="235-二叉搜索树的最近公共祖先"><a href="#235-二叉搜索树的最近公共祖先" class="headerlink" title="235.二叉搜索树的最近公共祖先"></a>235.二叉搜索树的最近公共祖先</h6><p>二叉搜索树，则最近公共祖先的必要条件是值在[p.val,q.val]之间，从上往下遍历，当第一次遇到这个范围的节点，即为最近公共祖先，因为此时，pq分别位于左右子树，无论继续往左或者往右遍历，都不再有公共祖先。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">lowestCommonAncestor</span><span class="params">(TreeNode root, TreeNode p, TreeNode q)</span> &#123;</span><br><span class="line">        <span class="comment">//公共祖先与两个指定节点的关系</span></span><br><span class="line">        <span class="comment">//1.两个指定节点在公共祖先的左右子树中，此时root.val在(p.val,q.val)之间</span></span><br><span class="line">        <span class="comment">//2.公共祖先为其中一个节点，此时root.val==p.val/q.val</span></span><br><span class="line">        <span class="comment">//从上往下，找到的第一个在[p.val,q.val]之间的值，为公共祖先</span></span><br><span class="line">        <span class="comment">//因为继续往左右子树遍历，必定不是公共祖先</span></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(root.val &gt; p.val &amp;&amp; root.val &gt; q.val)&#123;</span><br><span class="line">            <span class="keyword">return</span> lowestCommonAncestor(root.left,p,q);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt; p.val &amp;&amp; root.val &lt; q.val)&#123;</span><br><span class="line">            <span class="keyword">return</span> lowestCommonAncestor(root.right,p,q);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>70</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://wang-qing-yang.github.io/2023/04/22/2023-04-08-%E4%BA%8C%E5%8F%89%E6%A0%91-2/" title="二叉树-2" target="_blank" rel="external">https://wang-qing-yang.github.io/2023/04/22/2023-04-08-二叉树-2/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Wang-qing-yang" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Wang-qing-yang" target="_blank"><span class="text-dark">王庆阳</span><small class="ml-1x">Student</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2023/04/23/daily/" title="每日一题记录"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2023/04/10/Spring6-day2/" title="(no title)"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Wang-qing-yang" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
